@@ -25,7 +25,26 @@ app.use(function(req, res, next) {
   next()
 });
 
+
+const axios = require('axios');
+
 app.get('/coins', (req, res) => {
+  let apiURL = 'https://api.coinlore.com/api/tickers?start=0&limit=10';
+  if (req.apiGateway && req.apiGateway.event.queryStringParameters) {
+    const { start = 0, limit = 10 } = req.apiGateway.event.queryStringParameters;
+    apiURL = `https://api.coinlore.com/api/tickers?start=${start}&limit=${limit}`;
+  }
+
+  axios.get(apiURL)
+ .then(response => {
+      res.json({ coins: response.data.data });
+    })
+ .catch(error => {
+      res.status(500).send(error);
+    });
+});
+
+/*app.get('/coins', (req, res) => {
   const coins = [
     {name: 'Bitcoin', symbol: 'BTC', price: "10000"},
     {name: 'Ethereum', symbol: 'ETH', price: "1000"},
@@ -36,7 +55,7 @@ app.get('/coins', (req, res) => {
   res.json({
     coins
   });
-});
+});*/
 
 
 /**********************
