@@ -25,6 +25,19 @@ app.use(function(req, res, next) {
   next()
 });
 
+app.get('/coins', (req, res) => {
+  const coins = [
+    {name: 'Bitcoin', symbol: 'BTC', price: "10000"},
+    {name: 'Ethereum', symbol: 'ETH', price: "1000"},
+    {name: 'Ripple', symbol: 'XRP', price: "2000"},
+    {name: 'Litecoin', symbol: 'LTC', price: "1500"},
+    {name: 'Dogecoin', symbol: 'DOGE', price: "500"},
+  ]
+  res.json({
+    coins
+  });
+});
+
 
 /**********************
  * Example get method *
