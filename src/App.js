@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect } from'react';
-import API from 'aws-amplify';
+import { get } from 'aws-amplify/api';
 
 function App() {
   // create coins variable and set to empty array
@@ -10,13 +10,18 @@ function App() {
   // Define function to all API
   const fetchCoins = async () => {
     try {
-      const response = await API.get('cryptoAPI', '/coins');
-      console.log(response);
-      updatedCoins(response.data);
+      const restOperation = get({ 
+        apiName: 'cryptoAPI',
+        path: '/coins' 
+      });
+      const response = await restOperation.response;
+      const responseBody = await response.body.json();
+      console.log('GET call succeeded: ', responseBody);
+      updatedCoins(responseBody.coins);
     } catch (error) {
-      console.log(error);
+      console.log('GET call failed: ', error);
     }
-  };
+  }
 
   useEffect(() => {
     fetchCoins();
