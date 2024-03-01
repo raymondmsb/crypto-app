@@ -13,8 +13,11 @@ function App() {
     updateInput({ ...input, [type]: value });
   };
 
+  const [loading, updateLoading] = useState(true);
+
   // Define function to all API
   const fetchCoins = async () => {
+    updateLoading(true);
     const { limit, start } = input;
     try {
       const restOperation = get({ 
@@ -25,6 +28,7 @@ function App() {
       const responseBody = await response.body.json();
       console.log('GET call succeeded: ', responseBody);
       updatedCoins(responseBody.coins);
+      updateLoading(false);
     } catch (error) {
       console.log('GET call failed: ', error);
     }
@@ -39,14 +43,15 @@ function App() {
       <input type="number" placeholder="Limit" onChange={(e) => updateInputValue('limit', e.target.value)} />
       <input type="number" placeholder="Start" onChange={(e) => updateInputValue('start', e.target.value)} />
       <button onClick={fetchCoins}>Fetch Coins</button>
+      {loading ? <h2>Loading...</h2> : null}
       {
-        coins.map((coin, index) => (
+        !loading ? coins.map((coin, index) => (
           <div key={index}>
               <h1>{coin.name}</h1>
               <p>{coin.symbol}</p>
               <p>{coin.price}</p>
           </div>
-        ))
+        )) : null
       }
     </div>
   );
