@@ -25,7 +25,7 @@ export const Born = () => {
 
   useEffect(() => {
     fetchInfo();
-  }, []);
+  }, [statement]);
 
   return (
     <h2>{ statement }</h2>
