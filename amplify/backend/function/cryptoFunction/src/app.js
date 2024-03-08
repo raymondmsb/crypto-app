@@ -49,7 +49,7 @@ app.get('/born', (req, res) => {
 
   axios.get(apiURL)
  .then(response => {
-      res.json({ user: response });
+      res.json({ user: response.data });
     })
  .catch(error => {
       res.status(500).send(error);
