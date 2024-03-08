@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect } from'react';
 import { get } from 'aws-amplify/api';
+import { Born } from './Born';
 
 function App() {
   // create coins variable and set to empty array
@@ -53,6 +54,7 @@ function App() {
           </div>
         )) : null
       }
+      <Born />
     </div>
   );
 }

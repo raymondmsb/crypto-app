@@ -44,6 +44,18 @@ app.get('/coins', (req, res) => {
     });
 });
 
+app.get('/born', (req, res) => {
+  let apiURL = 'https://api.github.com/users/raymondmsb';
+
+  axios.get(apiURL)
+ .then(response => {
+      res.json({ user: response });
+    })
+ .catch(error => {
+      res.status(500).send(error);
+    });
+});
+
 /*app.get('/coins', (req, res) => {
   const coins = [
     {name: 'Bitcoin', symbol: 'BTC', price: "10000"},
